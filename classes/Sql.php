@@ -27,9 +27,10 @@ class Sql extends PDO{
 		$statment->bindParam($key, $value);
 	}
 
-	public function query($rawQuery, $params = array()){
+	//recebe a consulta e retorna o resultado
+	public function query($consulta, $params = array()){
 
-		$stmt = $this->conn->prepare($rawQuery);
+		$stmt = $this->conn->prepare($consulta);
 
 		$this->setParams($stmt, $params);
 
@@ -39,9 +40,10 @@ class Sql extends PDO{
 		
 	}
 
-	public function select($rawQuery, $params = array()):array{
+	//recebe a consulta e um parâmetro
+	public function select($consulta, $params = array()):array{
 
-		$stmt = $this->query($rawQuery, $params);
+		$stmt = $this->query($consulta, $params);
 
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}

@@ -2,14 +2,18 @@
 
 require_once("config.php");
 
-/*$sql = new Sql();
+//carrega um usuário
+//$user = new Usuario();
+//$user->loadById(1);
+//echo $user;
 
-$usuarios = $sql->select("SELECT * FROM tb_usuarios");
+//carrega uma lista de usuários
+//não é necessario instanciar o objeto pois o método getList() é estático
+//$lista = Usuario::listarUsuarios();
+//echo json_encode($lista);
 
-echo json_encode($usuarios);*/
-
-$user = new Usuario();
-
-$user->loadById(1);
-echo $user;
+//verifica se o usuario existe e loga no sistema
+$usuario = new Usuario();
+$usuario->validaLogin("Tiberio","123456");
+echo $usuario
 ?>

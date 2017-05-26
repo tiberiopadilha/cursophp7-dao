@@ -46,6 +46,7 @@ class Usuario {
 		$this->dtcadastro = $value;
 	}
 
+	//recebe uma consulta através do id do usuario, retornando o usuário 
 	public function loadById($id){
 
 		$sql = new Sql();
@@ -62,6 +63,40 @@ class Usuario {
 			$this->setDtcadastro(new DateTime($linha['dtcadastro']));
 		}
 	}
+
+	//lista todos usuários
+	public static function listarUsuarios(){
+
+		$sql = new Sql();
+
+		return $sql->select("SELECT * FROM tb_usuarios ORDER BY deslogin;");
+	}
+
+	//verifica se existe e lista o usuario que está logando
+	public function validaLogin($login, $senha){
+
+		$sql = new Sql();
+
+		$resultado = $sql->select("SELECT * FROM tb_usuarios WHERE deslogin = :LOGIN AND dessenha = :SENHA", array(
+			":LOGIN"=>$login, ":SENHA"=>$senha));
+
+		if (count($resultado)>0) {
+
+			$linha = $resultado[0]; //pega a partir do inicio
+
+			$this->setIdusuario($linha['idusuario']);
+			$this->setDeslogin($linha['deslogin']);
+			$this->setDessenha($linha['dessenha']);
+			$this->setDtcadastro(new DateTime($linha['dtcadastro']));
+		} else {
+			throw new Exception("Login e/ou senha inválidos");
+			
+		}
+
+	}
+	
+
+
 
 	public function __toString(){
 
